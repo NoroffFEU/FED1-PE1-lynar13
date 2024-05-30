@@ -91,6 +91,11 @@ To run this project locally, follow these steps:
 
 Contributions to improve the HotView Labs project are welcome. Feel free to fork the repository and create a pull request with your enhancements.
 
+## Acknowledgments
+
+[Noroff School of Technology and Digital Media](https://www.noroff.no/)
+[W3Schools](https://www.w3schools.com/)
+
 ## Contact
 
 If you have any questions or feedback, feel free to reach out via the GitHub repository's issue tracker or [Lynar13].
