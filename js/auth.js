@@ -1,11 +1,12 @@
-// Event listener for DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-   
+    // Check if the user is already logged in when the page loads
+    checkLogin();
 
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async event => {
             event.preventDefault();
+            console.log('Login form submitted');
             const email = event.target.email.value;
             const password = event.target.password.value;
             await login(email, password);
@@ -16,10 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (registerForm) {
         registerForm.addEventListener('submit', async event => {
             event.preventDefault();
+            console.log('Register form submitted');
             const name = event.target.name.value;
             const email = event.target.email.value;
             const password = event.target.password.value;
             await register(name, email, password);
+        });
+    }
+
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            console.log('Logout button clicked');
+            logout();
         });
     }
 });
@@ -27,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to log in the user
 async function login(email, password) {
     try {
+        console.log('Attempting to log in with', email, password);
         const response = await fetch('https://v2.api.noroff.dev/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -34,10 +45,11 @@ async function login(email, password) {
         });
 
         const data = await response.json();
+        console.log('Login response:', data);
+
         if (response.ok) {
-            const { accessToken, refreshToken } = data.data;
+            const { accessToken } = data.data;
             localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
             alert('Login Successful! You can now manage your posts.');
             window.location.href = '../post/create.html';
         } else {
@@ -49,64 +61,38 @@ async function login(email, password) {
     }
 }
 
-// Function to refresh the access token
-async function refreshAccessToken() {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) {
-        return null;
-    }
-
-    try {
-        const response = await fetch('https://v2.api.noroff.dev/auth/refresh', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ refreshToken })
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-            const newAccessToken = data.data.accessToken;
-            localStorage.setItem('accessToken', newAccessToken);
-            return newAccessToken;
-        } else {
-            console.error('Error refreshing access token:', data.errors);
-            logout();
-        }
-    } catch (error) {
-        console.error('Error during token refresh:', error);
-        logout();
-    }
-    return null;
-}
-
 // Function to get the access token from local storage
 function getAccessToken() {
     return localStorage.getItem('accessToken');
 }
 
 // Function to check if the user is logged in
-async function checkLogin() {
-    let token = getAccessToken();
-    if (!token) {
-        window.location.href = '/account/login.html';
-        return;
-    }
-    token = await refreshAccessToken();
-    if (!token) {
+function checkLogin() {
+    const token = getAccessToken();
+    const logoutButton = document.getElementById('logout-button');
+    if (token) {
+        if (logoutButton) {
+            logoutButton.style.display = 'block';
+        }
+    } else {
+        if (logoutButton) {
+            logoutButton.style.display = 'none';
+        }
         window.location.href = '/account/login.html';
     }
 }
 
 // Function to log out the user
 function logout() {
+    console.log('Logging out');
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     window.location.href = '/account/login.html';
 }
 
 // Function to register a new user
 async function register(name, email, password) {
     try {
+        console.log('Attempting to register with', name, email, password);
         const payload = {
             name,
             email,
@@ -129,6 +115,8 @@ async function register(name, email, password) {
         });
 
         const data = await response.json();
+        console.log('Register response:', data);
+
         if (response.ok) {
             alert('Registration successful. Please log in.');
             window.location.href = '/account/login.html';

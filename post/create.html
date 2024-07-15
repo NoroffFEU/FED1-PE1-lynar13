@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -22,8 +23,7 @@
         </div>
         <ul>
             <li><a href="../index.html">Blog</a></li>
-            <li><a href="../account/register.html">Register</a></li>
-            <li><a href="../account/login.html">Login</a></li>
+            <li><a href="../account/login.html" id="logout-button" style="display:none;">Logout</a></li>
         </ul>
     </nav>
 
@@ -36,13 +36,13 @@
             <form id="post-form">
                 <input type="hidden" id="post-id">
                 <label for="post-title-input">Title:</label>
-                <input type="text" id="post-title-input">
+                <input type="text" id="post-title-input" required>
                 <label for="post-content-input">Content:</label>
-                <textarea id="post-content-input"></textarea>
+                <textarea id="post-content-input" required></textarea>
                 <label for="post-tags-input">Category:</label>
-                <input type="text" id="post-tags-input">
+                <input type="text" id="post-tags-input" required>
                 <label for="post-image-input">Image URL:</label>
-                <input type="text" id="post-image-input">
+                <input type="text" id="post-image-input" required>
                 <label for="post-image-alt-input">Image Alt Text:</label>
                 <input type="text" id="post-image-alt-input">
                 <button type="submit" id="submit-post-btn">Create Post</button>
@@ -92,27 +92,8 @@
 
     <script src="../js/auth.js"></script>
     <script src="../js/post.js"></script>
-    <script src="../js/main.js"></script>
+   
 
-    <script>
-        // JavaScript for Back to Top and Scroll Down buttons
-        document.getElementById('back-to-top').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        document.getElementById('scroll-down').addEventListener('click', () => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        });
-
-        // Show or hide the back-to-top button based on scroll position
-        window.addEventListener('scroll', () => {
-            const backToTopButton = document.getElementById('back-to-top');
-            if (window.scrollY > 100) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
-            }
-        });
-    </script>
+    <script src="../js/backtotop.js"></script>
 </body>
 </html>

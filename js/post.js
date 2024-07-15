@@ -137,7 +137,6 @@ async function handleSubmitPostForm(event) {
 async function createPost(post, name) {
     try {
         const token = localStorage.getItem('accessToken');
-        alert('Token:', token);
         const response = await fetch(`https://v2.api.noroff.dev/blog/posts/${name}`, {
             method: 'POST',
             headers: {
@@ -151,6 +150,7 @@ async function createPost(post, name) {
         }
         const data = await response.json();
         alert('Post created:', data);
+        window.location.href = `../post/index.html?id=${data.data.id}&name=${name}`;
     } catch (error) {
         console.error('Error creating post:', error);
     }
@@ -215,7 +215,7 @@ async function deletePost(name, id) {
             throw new Error('Failed to delete post');
         }
         alert('Post deleted successfully');
-        window.location.href = 'index.html'; // Redirect to the main page after deletion
+        window.location.href = '../index.html'; // Redirect to the main page after deletion
     } catch (error) {
         console.error('Error deleting post:', error);
         alert('Error deleting post: ' + error.message);

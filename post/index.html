@@ -26,8 +26,8 @@
                 <span class="material-symbols-outlined" id="search-icon">search</span>
                 <input type="text" id="search-input" placeholder="Search posts by category..." style="display: none;" oninput="handleSearch(event)">
             </li>
-            <li><a href="../account/register.html">Register</a></li>
-            <li><a href="../account/login.html">Login</a></li>
+            <li><a href="../account/login.html" class="login-button">Create Post</a></li>
+            <li><a href="../account/login.html" id="logout-button" style="display:none;">Logout</a></li>
         </ul>
     </nav>
 
@@ -90,28 +90,9 @@
         </div>
     </footer>
 
+    <script src="../js/auth.js"></script>
     <script src="../js/post.js"></script>
-    
+    <script src="../js/backtotop.js"></script>
 
-    <script>
-        // JavaScript for Back to Top and Scroll Down buttons
-        document.getElementById('back-to-top').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        document.getElementById('scroll-down').addEventListener('click', () => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        });
-
-        // Show or hide the back-to-top button based on scroll position
-        window.addEventListener('scroll', () => {
-            const backToTopButton = document.getElementById('back-to-top');
-            if (window.scrollY > 100) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
-            }
-        });
-    </script>
 </body>
 </html>
